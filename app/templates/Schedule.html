@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Scheduling</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 123, 255, 0.8);
+            color: white;
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-icon {
+            position: absolute;
+            left: 20px;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            width: 80%;
+            margin-top: 30px;
+            justify-content: center;
+            height: 570px;
+        }
+
+        .left-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .robot-icon {
+            font-size: 100px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .right-column {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-left: 30px;
+        }
+
+        .schedule-form {
+            width: 80%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .schedule-form label, .schedule-form input, .schedule-form textarea, .schedule-form button {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .schedule-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #schedule-output {
+            margin-top: 20px;
+            width: 80%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <i class="fas fa-user-circle profile-icon"></i>
+        <span>Time Scheduling</span>
+    </div>
+
+    <div class="container">
+        <div class="left-column">
+            <i class="fas fa-calendar-alt robot-icon"></i>
+            <h2>Time Scheduling</h2>
+            <p>Generate a personalized study schedule.</p>
+        </div>
+        <div class="right-column">
+            <div class="schedule-form">
+                <label for="exam-date">Exam Date:</label>
+                <input type="date" id="exam-date">
+
+                <label for="subjects">Subjects (comma-separated):</label>
+                <textarea id="subjects"></textarea>
+
+                <label for="time-per-subject">Time per Subject (minutes):</label>
+                <input type="number" id="time-per-subject">
+
+                <button onclick="generateSchedule()">Generate Schedule</button>
+            </div>
+            <div id="schedule-output"></div>
+        </div>
+    </div>
+
+    <script>
+        function generateSchedule() {
+            const examDate = document.getElementById('exam-date').value;
+            const subjects = document.getElementById('subjects').value.split(',').map(s => s.trim());
+            const timePerSubject = parseInt(document.getElementById('time-per-subject').value);
+
+            // Replace with your logic to generate a schedule based on input
+            const schedule = generateDummySchedule(examDate, subjects, timePerSubject);
+
+            document.getElementById('schedule-output').innerHTML = schedule;
+        }
+
+        // Dummy schedule generation function (replace with your actual logic)
+        function generateDummySchedule(examDate, subjects, timePerSubject) {
+            let schedule = '<h2>Study Schedule</h2>';
+            schedule += '<p>Exam Date: ' + examDate + '</p>';
+            schedule += '<ul>';
+            subjects.forEach(subject => {
+                schedule += '<li>' + subject + ': ' + timePerSubject + ' minutes</li>';
+            });
+            schedule += '</ul>';
+            return schedule;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .chat-container {
+            width: 80%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            max-width: 80%;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 10px;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background: #e0e0e0;
+            color: black;
+            align-self: flex-start;
+        }
+        .chat-input {
+            display: flex;
+            margin-top: 10px;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .chat-input button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+        <div class="chat-container">
+            <div class="chat-box" id="chat-box"></div>
+            <div class="chat-input">
+                <input type="text" name="user-input" id="user-input" placeholder="Type a message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+
+
+
+        <script>
+            function sendMessage() {
+                let inputField = document.getElementById("user-input");
+                let chatBox = document.getElementById("chat-box");
+                let userMessage = inputField.value.trim();
+        
+                if (userMessage === "") return;
+        
+                // Add user message
+                chatBox.innerHTML += `<div class="message user-message">${userMessage}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+        
+                // Send message to backend
+                fetch("/home", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question: userMessage }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Add bot response
+                    let botMessage = `<div class="message bot-message">${data.response}</div>`;
+                    chatBox.innerHTML += botMessage;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                })
+                .catch(error => console.error("Error:", error));
+        
+                inputField.value = ""; // Clear input field
+            }
+        </script>
+        
+        <!-- <script>
+            function sendMessage() {
+                let inputField = document.getElementById("user-input");
+                let chatBox = document.getElementById("chat-box");
+                let userMessage = inputField.value.trim();
+        
+                if (userMessage === "") return;
+        
+                let userHtml = `<div class="message user-message">${userMessage}</div>`;
+                chatBox.innerHTML += userHtml; // Add user message
+                chatBox.scrollTop = chatBox.scrollHeight;
+        
+                // Send message to backend
+                fetch("/home", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question: userMessage }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    let botHtml = `<div class="message bot-message">{{res}}</div>`;
+                    console.log(`${res}`)
+                    chatBox.innerHTML += botHtml; // Add bot response
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                })
+                .catch(error => console.error("Error:", error));
+        
+                inputField.value = ""; // Clear input field
+            }
+        </script> -->
+        
+
+    <!-- <script>
+        function sendMessage() {
+            let inputField = document.getElementById("user-input");
+            let chatBox = document.getElementById("chat-box");
+            let userMessage = inputField.value.trim();
+            
+            if (userMessage === "") return;
+            
+            let userHtml = <div class="message user-message">${userMessage}</div>;
+            let botHtml = <div class="message bot-message">{{ res }}</div>;
+            
+            chatBox.innerHTML += userHtml; // Add user message
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                chatBox.innerHTML += botHtml; // Add bot response after a short delay
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 500);
+            
+            inputField.value = "";
+        }
+    </script> -->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AskAI Tutor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+
+</head>
+<body>
+    <form action="{{ url_for('views.home') }}" method="post">
+
+        <div class="main-container">
+            <div class="teacher-section">
+                <div class="teacher-animation"></div>
+                <p class="teacher-text">Hello! Ask me anything.</p>
+            </div>      
+            <div class="question-section">
+              <textarea id="question" name="question" placeholder="Type your question here..."></textarea>
+              <a href="{{ url_for('views.home') }}">
+                <button type="submit" id="ask-btn">Ask</button>
+              </a>              
+            </div>
+        </div>
+
+    </form>
+    <a href="https://annas-archive.org/">Books</a>
+
+    
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+</body>
+</html> -->
+
